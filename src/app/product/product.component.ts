@@ -2,19 +2,18 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-product',
-  standalone: true,
-  imports: [],
   templateUrl: './product.component.html',
-  styleUrl: './product.component.css'
+  styleUrl: './product.component.css',
+  standalone: true,
 })
 export class ProductComponent {
-  @Input() name!: string;
-  @Input() image!: string;
-  @Input() price!: number;
+  @Input() public name!: string;
+  @Input() public image!: string;
+  @Input() public price!: number;
 
-  @Output() productSelected = new EventEmitter<void>();
+  @Output() public productSelected = new EventEmitter<void>();
 
-  onProductClick() {
+  protected onProductClick(): void {
     this.productSelected.emit();
   }
 }
