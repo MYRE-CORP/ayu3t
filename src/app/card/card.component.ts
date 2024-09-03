@@ -11,7 +11,7 @@ import { products } from '../constants';
   standalone: true,
   imports: [CommonModule],
 })
-export class CardComponent {
+export class CardListComponent {
   @Input() cardList!: Card[];
   protected _products = products;
 

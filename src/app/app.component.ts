@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {ProductComponent} from "./product/product.component";
-import {CardComponent} from "./card/card.component";
+import {CardListComponent} from "./card/card.component";
 import {NgForOf} from "@angular/common";
 import {products} from "./constants";
 import {Card, Product} from "./interfaces";
@@ -12,7 +12,7 @@ import {Card, Product} from "./interfaces";
     styleUrl: './app.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [RouterOutlet, ProductComponent, CardComponent, NgForOf],
+    imports: [RouterOutlet, ProductComponent, CardListComponent, NgForOf],
 })
 export class AppComponent {
 
@@ -20,22 +20,32 @@ export class AppComponent {
     protected _cardList: Card[] = [];
 
     protected onProductSelected(product: Product): void {
-        if (!this._cardList.find(element => element.id === product.id)) {
-            this._cardList = [...this._cardList, {
-                'id': product.id,
-                'quantity': 0
-            }];
+        const card = this._cardList.find(element => element.id === product.id);
+        if (!card) {
+            this.addProductCard(product);
+            this.incrementProductCard(product);
+        } else {
+            this.incrementProductCard(product);
         }
+    }
 
+    protected productTrackBy(index: number, product: { id: number }): number {
+        return product.id;
+    }
+
+    private addProductCard(product: Product): void {
+        this._cardList = [...this._cardList, {
+            'id': product.id,
+            'quantity': 0
+        }];
+    }
+
+    private incrementProductCard(product: Product): void {
         this._cardList =this._cardList.map(element => {
             if (element.id === product.id) {
                 return {...element, quantity: element.quantity+1};
             }
             return element;
         })
-    }
-
-    protected productTrackBy(index: number, product: { id: number }): number {
-        return product.id;
     }
 }
