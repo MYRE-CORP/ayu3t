@@ -1,0 +1,11 @@
+<div class="card">
+    <h2>Panier</h2>
+    <div *ngIf="cardList">
+        <div class="card-product" *ngFor="let product of cardList; trackBy: productTrackBy">
+            <img class="card-product-image element" [src]="product.image" alt="{{ product.name }}">
+            <h3 class="element"> {{ product.name }} </h3>
+            <p class="element"> {{ product.price }}€ </p>
+            <p class="element">quantité: {{ product.quantity }}</p>
+        </div>
+    </div>
+</div>

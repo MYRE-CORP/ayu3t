@@ -1,5 +1,6 @@
-<div (click)="onProductClick()" class="product-card">
+<div class="product-card">
   <img [src]="image" alt="{{ name }}" class="product-image">
   <h3 class="product-name"> {{ name }} </h3>
   <p class="product-price"> {{ price }}€ </p>
+  <button class="add-to-card-button" (click)="onProductClick()">Ajouter au panier</button>
 </div>
