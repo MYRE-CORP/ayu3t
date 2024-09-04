@@ -1,25 +1,37 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {BehaviorSubject, Observable} from "rxjs";
+import {ProductService} from "../Services/product.service";
+import {Product} from "../interfaces";
+import {AsyncPipe, NgForOf} from "@angular/common";
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrl: './product.component.css',
-  standalone: true,
+    selector: 'app-product',
+    templateUrl: './product.component.html',
+    styleUrl: './product.component.css',
+    standalone: true,
+    imports: [
+        AsyncPipe,
+        NgForOf
+    ]
 })
 export class ProductComponent {
-  @Input()
-  public name: string;
+    products$: Observable<Product[]>;
 
-  @Input()
-  public image: string;
+    constructor(private productService: ProductService) {}
 
-  @Input()
-  public price: number;
+    ngOnInit() {
+        this.products$ = this.productService.getProducts();
+    }
 
-  @Output()
-  public readonly productSelected = new EventEmitter<void>();
+    @Output()
+    public readonly productSelected = new EventEmitter<Product>();
 
-  protected _onProductClick(): void {
-    this.productSelected.emit();
-  }
+    protected _onProductClick(product: Product): void {
+        this.productService.addProductCard(product);
+        // this.productSelected.emit(product);
+    }
+
+    protected productTrackBy(index: number, product: { id: number }): number {
+        return product.id;
+    }
 }

@@ -25,3 +25,7 @@
 .add-to-card-button:active {
   background-color: #cecece;
 }
+
+.product-container {
+  display: flex;
+}

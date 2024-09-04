@@ -1,10 +1,11 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {ProductComponent} from "./product/product.component";
 import {CardListComponent} from "./card/cardList.component";
-import {NgForOf} from "@angular/common";
-import {products} from "./constants";
+import {AsyncPipe, NgForOf} from "@angular/common";
 import {Card, Product} from "./interfaces";
+import {ProductService} from "./Services/product.service";
+import {Observable} from "rxjs";
 
 @Component({
     selector: 'app-root',
@@ -12,38 +13,18 @@ import {Card, Product} from "./interfaces";
     styleUrl: './app.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [RouterOutlet, ProductComponent, CardListComponent, NgForOf],
+    imports: [RouterOutlet, ProductComponent, CardListComponent, NgForOf, AsyncPipe],
 })
+
 export class AppComponent {
 
-    protected _products = products;
-    protected _cardList: Card[] = [];
+    products$: Observable<Product[]>;
 
-    protected onProductSelected(product: Product): void {
-        if (!this._cardList.some(element => element.id === product.id)) {
-            this.addProductCard(product);
-        }
-        this.incrementProductCard(product);
+    ngOnInit(): void {
+        this.products$ = this.productService.getProducts();
     }
 
-    protected productTrackBy(index: number, product: { id: number }): number {
-        return product.id;
-    }
+    constructor(private productService: ProductService) {
 
-    private addProductCard(product: Product): Card {
-        this._cardList = [...this._cardList, {
-            'id': product.id,
-            'quantity': 0
-        }];
-        return this._cardList.at(-1);
-    }
-
-    private incrementProductCard(product: Product): void {
-        this._cardList = this._cardList.map(element => {
-            if (element.id === product.id) {
-                return {...element, quantity: element.quantity + 1};
-            }
-            return element;
-        })
     }
 }

@@ -1,7 +1,9 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {Card} from "../interfaces";
 import {CommonModule} from "@angular/common";
 import {products} from '../constants';
+import {Observable} from "rxjs";
+import {ProductService} from "../Services/product.service";
 
 @Component({
     selector: 'app-card',
@@ -12,8 +14,14 @@ import {products} from '../constants';
     imports: [CommonModule],
 })
 export class CardListComponent {
-    @Input({required: true})
-    public cardList: Card[];
+    cardList$: Observable<Card[]>;
+
+    constructor(private productService: ProductService) {
+    }
+
+    ngOnInit(): void {
+        this.cardList$ = this.productService.getCardList();
+    }
 
     protected _products = products;
 
