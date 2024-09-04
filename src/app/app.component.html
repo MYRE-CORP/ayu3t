@@ -4,8 +4,10 @@
       [name]="product.name"
       [image]="product.image"
       [price]="product.price"
-      (productSelected)="onProductSelected()"
+      (productSelected)="onProductSelected(product)"
     >
     </app-product>
   </div>
 </div>
+<app-card [cardList]="_cardList">
+</app-card>
