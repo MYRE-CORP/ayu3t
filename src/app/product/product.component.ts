@@ -8,13 +8,13 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 })
 export class ProductComponent {
   @Input()
-  public readonly name: string;
+  public name: string;
 
   @Input()
-  public readonly image: string;
+  public image: string;
 
   @Input()
-  public readonly  price: number;
+  public price: number;
 
   @Output()
   public readonly productSelected = new EventEmitter<void>();

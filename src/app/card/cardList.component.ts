@@ -13,7 +13,7 @@ import {products} from '../constants';
 })
 export class CardListComponent {
     @Input({required: true})
-    public readonly cardList: Card[];
+    public cardList: Card[];
 
     protected _products = products;
 
