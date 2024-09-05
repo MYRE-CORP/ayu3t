@@ -9,11 +9,9 @@ import {products} from "../constants";
 
 export class ProductService {
 
-    private _cardListSubject = new BehaviorSubject<Card[]>([]);
-    cardList$ = this._cardListSubject.asObservable();
+    private readonly _cardListSubject = new BehaviorSubject<Card[]>([]);
 
-    private _productSubject = new BehaviorSubject<Product[]>([]);
-    products$ = this._productSubject.asObservable();
+    private readonly _productSubject = new BehaviorSubject<Product[]>([]);
 
     constructor() {
         this._productSubject.next(products);
@@ -43,11 +41,11 @@ export class ProductService {
         this._cardListSubject.next(newElement);
     }
 
-    public getCardList(): Observable<Card[]> {
-        return this.cardList$;
+    public get cardList$(): Observable<Card[]> {
+        return this._cardListSubject.asObservable();
     }
 
-    public getProducts(): Observable<Product[]> {
-        return this.products$;
+    public get products$(): Observable<Product[]> {
+        return this._productSubject.asObservable();
     }
 }

@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {Card} from "../interfaces";
+import {Card, Product} from "../interfaces";
 import {CommonModule} from "@angular/common";
 import {products} from '../constants';
 import {Observable} from "rxjs";
@@ -20,10 +20,10 @@ export class CardListComponent {
     }
 
     ngOnInit(): void {
-        this.cardList$ = this.productService.getCardList();
+        this.cardList$ = this.productService.cardList$;
     }
 
-    protected _products = products;
+    protected readonly _products: Product[] = products;
 
     protected _cardTrackBy(_: number, card: Card): number {
         return card.id;
