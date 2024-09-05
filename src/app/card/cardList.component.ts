@@ -28,4 +28,16 @@ export class CardListComponent {
     protected _cardTrackBy(_: number, card: Card): number {
         return card.id;
     }
+
+    protected _deleteProductFromCardList(cardElement: Card): void {
+        this.productService.deleteFromCard(cardElement.id);
+    }
+
+    protected _addOneToCard(cardElement: Card): void {
+        this.productService.incrementProductCard(cardElement);
+    }
+
+    protected _substractOneFromCard(cardElement: Card): void {
+        this.productService.substractProductCard(cardElement);
+    }
 }

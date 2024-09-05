@@ -29,3 +29,12 @@
 .product-container {
   display: flex;
 }
+
+.add-to-card-container {
+  display: flex;
+  align-items: center;
+}
+
+.add-substract-buttons {
+  margin-left: 10px;
+}

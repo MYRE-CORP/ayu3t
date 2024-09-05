@@ -26,7 +26,7 @@ export class ProductService {
 
     }
 
-    public incrementProductCard(product: Product): void {
+    public incrementProductCard(product: any): void {
         const cardList = this._cardListSubject$.value;
         const incrementedCardList = cardList.map(element => {
             if (element.id === product.id) {
@@ -35,6 +35,23 @@ export class ProductService {
             return element;
         })
         this._cardListSubject$.next(incrementedCardList);
+    }
+
+    public deleteFromCard(id: number): void {
+        const currentCard = this.cardListSubject.value;
+        const updatedCard = currentCard.filter(product => product.id !== id);
+        this.cardListSubject.next(updatedCard);
+    }
+
+    public substractProductCard(card: Card): void {
+        const cardList = this.cardListSubject.value.map(element =>
+            element.id === card.id ? {...element, quantity: element.quantity - 1} : element
+        );
+        this.cardListSubject.next(cardList);
+        const cardElement = cardList.find(element => element.id === card.id);
+        if (cardElement && cardElement.quantity <= 0) {
+            this.deleteFromCard(cardElement.id);
+        }
     }
 
     public get cardList$(): Observable<Card[]> {
