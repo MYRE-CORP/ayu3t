@@ -6,7 +6,7 @@
             <p> {{ product.price }}€ </p>
             <div class="add-to-card-container">
                 <button class="add-to-card-button" (click)="_onProductClick(product)">Ajouter au panier</button>
-                <div class="add-substract-buttons" *ngFor="let card of cardList$ | async; trackBy: _cardTrackBy">
+                <div *ngFor="let card of _cardList$ | async; trackBy: _cardTrackBy">
                     <span *ngIf="product.id === card.id">
                         <button (click)="_addOneToCard(card)">+</button>
                         <button (click)="_substractOneFromCard(card)">-</button>

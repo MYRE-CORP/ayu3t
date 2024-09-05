@@ -1,8 +1,9 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {Observable} from "rxjs";
 import {ProductService} from "../Services/product.service";
 import {Card, Product} from "../interfaces";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {CardService} from "../Services/card.service";
 
 @Component({
     selector: 'app-product',
@@ -20,26 +21,28 @@ export class ProductComponent {
     protected _products$: Observable<Product[]>;
     protected _cardList$: Observable<Card[]>;
 
-    constructor(private productService: ProductService) {}
+    constructor(private productService: ProductService,
+                private cardService: CardService,) {
+    }
 
     ngOnInit() {
         this._products$ = this.productService.products$;
-        this._cardList$ = this.productService.cardList$;
+        this._cardList$ = this.cardService.cardList$;
     }
 
     protected _onProductClick(product: Product): void {
-        this.productService.addProductCard(product);
+        this.cardService.addProductCard(product);
     }
 
     protected _addOneToCard(cardElement: Card): void {
-        this.productService.incrementProductCard(cardElement);
+        this.cardService.incrementProductCard(cardElement);
     }
 
     protected _substractOneFromCard(cardElement: Card): void {
-        this.productService.substractProductCard(cardElement);
+        this.cardService.substractProductCard(cardElement);
     }
 
-    protected _productTrackBy(index: number, product: { id: number }): number {
+    protected _productTrackBy(_: number, product: { id: number }): number {
         return product.id;
     }
 

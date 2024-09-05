@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {ProductComponent} from "./product/product.component";
 import {CardListComponent} from "./card/cardList.component";
@@ -14,5 +14,4 @@ import {AsyncPipe, NgForOf} from "@angular/common";
 })
 
 export class AppComponent {
-
 }
