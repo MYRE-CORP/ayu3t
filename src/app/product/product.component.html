@@ -1,5 +1,5 @@
 <div class="product-container">
-    @for (product of _products$ | async; track product.id) {
+    @for (product of _products(); track product.id) {
         <div class="product-card">
             <img [src]="product.image"
                  [attr.alt]="product.name"
@@ -10,7 +10,7 @@
                 <button class="add-to-card-button"
                         (click)="_onProductClick(product)">Ajouter au panier
                 </button>
-                @for (card of _cardList$ | async; track card.id) {
+                @for (card of _cardList(); track card.id) {
                     <div>
                         @if (product.id === card.id) {
                             <button (click)="_addOneToCard(card)">+</button>

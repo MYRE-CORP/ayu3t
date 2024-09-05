@@ -1,5 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {ProductService} from '../Services/product.service';
 import {Card, Product} from '../interfaces';
 import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
@@ -18,18 +17,13 @@ import {CardService} from '../Services/card.service';
     ],
 })
 
-export class ProductComponent implements OnInit {
+export class ProductComponent {
 
     private readonly productService = inject(ProductService)
     private readonly cardService = inject(CardService)
 
-    protected _products$: Observable<Product[]>;
-    protected _cardList$: Observable<Card[]>;
-
-    ngOnInit() {
-        this._products$ = this.productService.products$;
-        this._cardList$ = this.cardService.cardList$;
-    }
+    protected _products = this.productService.products;
+    protected _cardList = this.cardService.cardList$;
 
     protected _onProductClick(product: Product): void {
         this.cardService.addProductCard(product);
