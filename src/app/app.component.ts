@@ -18,13 +18,4 @@ import {Observable} from "rxjs";
 
 export class AppComponent {
 
-    products$: Observable<Product[]>;
-
-    ngOnInit(): void {
-        this.products$ = this.productService.getProducts();
-    }
-
-    constructor(private productService: ProductService) {
-
-    }
 }

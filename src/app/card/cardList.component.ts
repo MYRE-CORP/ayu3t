@@ -25,7 +25,7 @@ export class CardListComponent {
 
     protected _products = products;
 
-    protected cardTrackBy(_: number, card: Card): number {
+    protected _cardTrackBy(_: number, card: Card): number {
         return card.id;
     }
 }

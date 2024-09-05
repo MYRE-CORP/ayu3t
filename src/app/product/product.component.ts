@@ -23,15 +23,11 @@ export class ProductComponent {
         this.products$ = this.productService.getProducts();
     }
 
-    @Output()
-    public readonly productSelected = new EventEmitter<Product>();
-
     protected _onProductClick(product: Product): void {
         this.productService.addProductCard(product);
-        // this.productSelected.emit(product);
     }
 
-    protected productTrackBy(index: number, product: { id: number }): number {
+    protected _productTrackBy(index: number, product: { id: number }): number {
         return product.id;
     }
 }

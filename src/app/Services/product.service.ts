@@ -9,45 +9,45 @@ import {products} from "../constants";
 
 export class ProductService {
 
-    private cardListSubject = new BehaviorSubject<Card[]>([]);
-    cardList$ = this.cardListSubject.asObservable();
+    private _cardListSubject = new BehaviorSubject<Card[]>([]);
+    cardList$ = this._cardListSubject.asObservable();
 
-    private productSubject = new BehaviorSubject<Product[]>([]);
-    products$ = this.productSubject.asObservable();
+    private _productSubject = new BehaviorSubject<Product[]>([]);
+    products$ = this._productSubject.asObservable();
 
     constructor() {
-        this.productSubject.next(products);
+        this._productSubject.next(products);
     }
 
     public addProductCard(product: Product): void {
-        const cardList = this.cardListSubject.value
+        const cardList = this._cardListSubject.value
         if (!cardList.some(element => element.id === product.id)) {
             const newCardList = [...cardList, {
                 'id': product.id,
                 'quantity': 0
             }];
-            this.cardListSubject.next(newCardList);
+            this._cardListSubject.next(newCardList);
         }
         this.incrementProductCard(product);
 
     }
 
     public incrementProductCard(product: Product): void {
-        const cardList = this.cardListSubject.value;
+        const cardList = this._cardListSubject.value;
         const newElement = cardList.map(element => {
             if (element.id === product.id) {
                 return {...element, quantity: element.quantity + 1};
             }
             return element;
         })
-        this.cardListSubject.next(newElement);
+        this._cardListSubject.next(newElement);
     }
 
-    getCardList(): Observable<Card[]> {
+    public getCardList(): Observable<Card[]> {
         return this.cardList$;
     }
 
-    getProducts(): Observable<Product[]> {
+    public getProducts(): Observable<Product[]> {
         return this.products$;
     }
 }

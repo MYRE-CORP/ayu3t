@@ -1,5 +1,5 @@
 <div class="product-container">
-    <div *ngFor="let product of products$ | async; trackBy: productTrackBy">
+    <div *ngFor="let product of products$ | async; trackBy: _productTrackBy">
         <div class="product-card">
             <img [src]="product.image" alt="{{ product.name }}" class="product-image">
             <h3 class="product-name"> {{ product.name }} </h3>
