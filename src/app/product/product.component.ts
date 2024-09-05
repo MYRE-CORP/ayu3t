@@ -1,25 +1,34 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {BehaviorSubject, Observable} from "rxjs";
+import {ProductService} from "../Services/product.service";
+import {Product} from "../interfaces";
+import {AsyncPipe, NgForOf} from "@angular/common";
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrl: './product.component.css',
-  standalone: true,
+    selector: 'app-product',
+    templateUrl: './product.component.html',
+    styleUrl: './product.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        AsyncPipe,
+        NgForOf
+    ]
 })
 export class ProductComponent {
-  @Input()
-  public name: string;
+    protected _products$: Observable<Product[]>;
 
-  @Input()
-  public image: string;
+    constructor(private productService: ProductService) {}
 
-  @Input()
-  public price: number;
+    ngOnInit() {
+        this._products$ = this.productService.products$;
+    }
 
-  @Output()
-  public readonly productSelected = new EventEmitter<void>();
+    protected _onProductClick(product: Product): void {
+        this.productService.addProductCard(product);
+    }
 
-  protected _onProductClick(): void {
-    this.productSelected.emit();
-  }
+    protected _productTrackBy(index: number, product: { id: number }): number {
+        return product.id;
+    }
 }

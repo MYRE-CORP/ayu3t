@@ -1,13 +1,6 @@
 <div class="product-container">
-  <div *ngFor="let product of _products; trackBy: productTrackBy">
-    <app-product
-      [name]="product.name"
-      [image]="product.image"
-      [price]="product.price"
-      (productSelected)="onProductSelected(product)"
-    >
+    <app-product>
     </app-product>
   </div>
-</div>
-<app-card [cardList]="_cardList">
+<app-card>
 </app-card>

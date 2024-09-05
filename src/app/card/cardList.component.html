@@ -1,7 +1,7 @@
 <div class="card">
     <h2>Panier</h2>
-    <div *ngIf="cardList">
-        <div class="card-product" *ngFor="let card of cardList; let i = index; trackBy: cardTrackBy">
+    <div *ngIf="_cardList$ | async;">
+        <div class="card-product" *ngFor="let card of _cardList$ | async; trackBy: _cardTrackBy">
             <img class="card-product-image element" [src]="_products[card.id].image" alt="{{ _products[card.id].name }}">
             <h3 class="element"> {{ _products[card.id].name }} </h3>
             <p class="element"> {{ _products[card.id].price }}€ </p>
