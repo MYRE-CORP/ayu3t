@@ -14,13 +14,13 @@ import {ProductService} from "../Services/product.service";
     imports: [CommonModule],
 })
 export class CardListComponent {
-    cardList$: Observable<Card[]>;
+    protected _cardList$: Observable<Card[]>;
 
     constructor(private productService: ProductService) {
     }
 
     ngOnInit(): void {
-        this.cardList$ = this.productService.cardList$;
+        this._cardList$ = this.productService.cardList$;
     }
 
     protected readonly _products: Product[] = products;

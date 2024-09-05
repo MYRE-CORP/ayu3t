@@ -9,43 +9,39 @@ import {products} from "../constants";
 
 export class ProductService {
 
-    private readonly _cardListSubject = new BehaviorSubject<Card[]>([]);
+    private readonly _cardListSubject$ = new BehaviorSubject<Card[]>([]);
 
-    private readonly _productSubject = new BehaviorSubject<Product[]>([]);
-
-    constructor() {
-        this._productSubject.next(products);
-    }
+    private readonly _productSubject$ = new BehaviorSubject<Product[]>(products);
 
     public addProductCard(product: Product): void {
-        const cardList = this._cardListSubject.value
+        const cardList = this._cardListSubject$.value
         if (!cardList.some(element => element.id === product.id)) {
             const newCardList = [...cardList, {
                 'id': product.id,
                 'quantity': 0
             }];
-            this._cardListSubject.next(newCardList);
+            this._cardListSubject$.next(newCardList);
         }
         this.incrementProductCard(product);
 
     }
 
     public incrementProductCard(product: Product): void {
-        const cardList = this._cardListSubject.value;
-        const newElement = cardList.map(element => {
+        const cardList = this._cardListSubject$.value;
+        const incrementedCardList = cardList.map(element => {
             if (element.id === product.id) {
                 return {...element, quantity: element.quantity + 1};
             }
             return element;
         })
-        this._cardListSubject.next(newElement);
+        this._cardListSubject$.next(incrementedCardList);
     }
 
     public get cardList$(): Observable<Card[]> {
-        return this._cardListSubject.asObservable();
+        return this._cardListSubject$.asObservable();
     }
 
     public get products$(): Observable<Product[]> {
-        return this._productSubject.asObservable();
+        return this._productSubject$.asObservable();
     }
 }
