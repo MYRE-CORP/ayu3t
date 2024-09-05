@@ -1,18 +1,22 @@
 <div class="product-container">
-    <div *ngFor="let product of _products$ | async; trackBy: _productTrackBy">
-        <div class="product-card">
-            <img [src]="product.image" alt="{{ product.name }}" class="product-image">
-            <h3> {{ product.name }} </h3>
-            <p> {{ product.price }}€ </p>
-            <div class="add-to-card-container">
-                <button class="add-to-card-button" (click)="_onProductClick(product)">Ajouter au panier</button>
-                <div *ngFor="let card of _cardList$ | async; trackBy: _cardTrackBy">
-                    <span *ngIf="product.id === card.id">
-                        <button (click)="_addOneToCard(card)">+</button>
-                        <button (click)="_substractOneFromCard(card)">-</button>
-                    </span>
-                </div>
-            </div>
+  <div *ngFor="let product of _products$ | async; trackBy: _productTrackBy">
+    <div class="product-card">
+      <img [src]="product.image"
+           [attr.alt]="product.name"
+           class="product-image">
+      <h3> {{ product.name }} </h3>
+      <p> {{ product.price }}€ </p>
+      <div class="add-to-card-container">
+        <button class="add-to-card-button"
+                (click)="_onProductClick(product)">Ajouter au panier
+        </button>
+        <div *ngFor="let card of _cardList$ | async; trackBy: _cardTrackBy">
+          <span *ngIf="product.id === card.id">
+            <button (click)="_addOneToCard(card)">+</button>
+            <button (click)="_substractOneFromCard(card)">-</button>
+          </span>
         </div>
+      </div>
     </div>
+  </div>
 </div>
