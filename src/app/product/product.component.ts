@@ -1,8 +1,9 @@
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {ProductService} from '../Services/product.service';
 import {Card, Product} from '../interfaces';
-import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 import {CardService} from '../Services/card.service';
+import {CardListComponent} from "../card/cardList.component";
 
 @Component({
   selector: 'app-product',
@@ -12,8 +13,7 @@ import {CardService} from '../Services/card.service';
   standalone: true,
   imports: [
     AsyncPipe,
-    NgForOf,
-    NgIf,
+    CardListComponent
   ],
 })
 
