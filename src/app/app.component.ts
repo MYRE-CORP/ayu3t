@@ -13,7 +13,7 @@ import {InputOutputComponent} from "./Exemple/input-output/input-output.componen
 })
 
 export class AppComponent {
-  protected texts = ['coucou', 'bonjour', 'salut'];
+  protected words = ['coucou', 'bonjour', 'salut'];
 
   protected _alertText(text: string) {
     alert(text);

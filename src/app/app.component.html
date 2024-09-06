@@ -2,7 +2,7 @@
     <app-product></app-product>
 </div>
 <app-card></app-card>
-@for (word of texts; track word) {
+@for (word of words; track word) {
     <app-input-output (textSelected)="_alertText(word)" [text]="word"></app-input-output>
 }
 

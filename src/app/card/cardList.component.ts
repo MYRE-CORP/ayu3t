@@ -1,35 +1,34 @@
-import {ChangeDetectionStrategy, Component, DestroyRef, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {Card} from '../interfaces';
 import {CommonModule} from '@angular/common';
 import {ProductService} from '../Services/product.service';
 import {CardService} from '../Services/card.service';
 
 @Component({
-    selector: 'app-card',
-    templateUrl: './cardList.component.html',
-    styleUrl: './cardList.component.css',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [CommonModule],
+  selector: 'app-card',
+  templateUrl: './cardList.component.html',
+  styleUrl: './cardList.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule],
 })
 export class CardListComponent {
 
-    private readonly productService = inject(ProductService)
-    private readonly cardService = inject(CardService)
-    private readonly _destroyRef = inject(DestroyRef)
+  private readonly _productService = inject(ProductService)
+  private readonly _cardService = inject(CardService)
 
-    protected _products = this.productService.products;
-    protected _cardList = this.cardService.cardList$;
+  protected _products = this._productService.products;
+  protected _cardList = this._cardService.cardList;
 
-    protected _deleteProductFromCardList(cardElement: Card): void {
-        this.cardService.deleteFromCard(cardElement.id);
-    }
+  protected _deleteProductFromCardList(cardElement: Card): void {
+    this._cardService.deleteFromCard(cardElement.id);
+  }
 
-    protected _addOneToCard(cardElement: Card): void {
-        this.cardService.incrementProductCard(cardElement);
-    }
+  protected _addOneToCard(cardElement: Card): void {
+    this._cardService.incrementProductCard(cardElement);
+  }
 
-    protected _substractOneFromCard(cardElement: Card): void {
-        this.cardService.substractProductCard(cardElement);
-    }
+  protected _substractOneFromCard(cardElement: Card): void {
+    this._cardService.substractProductCard(cardElement);
+  }
 }
