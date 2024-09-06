@@ -1,16 +1,20 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ProductComponent} from "./product/product.component";
-import {HelloWordComponent} from "./HelloWord/hello-word/hello-word.component";
 
 export const routes: Routes = [
   {
-    path: 'hello-world',
-    component: HelloWordComponent
+    path: 'products',
+    loadComponent: () =>
+      import('./product/product.component').then(
+        (m) => m.ProductComponent
+      ),
   },
   {
-    path: 'products',
-    component: ProductComponent
+    path: 'hello-world',
+    loadComponent: () =>
+      import('./HelloWord/hello-word/hello-word.component').then(
+        (m) => m.HelloWordComponent
+      ),
   },
 ];
 
