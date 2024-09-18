@@ -6,7 +6,6 @@ import {ProductService} from '../Services/product.service';
 import {CardService} from '../Services/card.service';
 import {selectAllCards} from '../Store/card/card.selectors';
 import {deleteProductCard, incrementProductCard, substractProductCard} from "../Store/card/card.action";
-import {toSignal} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-card',
@@ -20,7 +19,7 @@ export class CardListComponent {
 
   private readonly _store = inject(Store);
 
-  protected _cardList: Signal<Card[]> = toSignal(this._store.select(selectAllCards));
+  protected _cardList: Signal<Card[]> = this._store.selectSignal(selectAllCards);
 
   private readonly _productService = inject(ProductService)
   private readonly _cardService = inject(CardService)

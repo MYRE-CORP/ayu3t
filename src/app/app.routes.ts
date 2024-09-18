@@ -4,6 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 export const routes: Routes = [
   {
     path: 'products',
+    resolve
     loadComponent: () =>
       import('./product/product.component').then(
         (m) => m.ProductComponent

@@ -36,7 +36,15 @@ export const cardReducer = createReducer(
     //TODO: recuperer quantité du produit
     //si la quantité est égale a 1 -> suppression du produyct
     //sinon je soustrais
-  }*/
+    const cardList = state.cards.map(element =>
+      element.id === productId ? {...element, quantity: element.quantity - 1} : element,
+    );
+    this._cardListSubject$.next(cardList);
+    const cardElement = cardList.find(element => element.id === card.id);
+    if (cardElement && cardElement.quantity <= 0) {
+      this.deleteFromCard(cardElement.id);
+    }
+  }
 
 );
 
@@ -44,6 +52,16 @@ function deleteProductCard(state: CardState, productId: number): CardState {
   return {
     ...state,
     cards: state.cards.filter(card => card.id !== productId)
+  }
+}
+
+function incrementProductCard(state: CardState, product: any): CardState {
+  if()
+  return {
+    ...state,
+    cards: state.cards.map(card =>
+      card.id === product.id ? {...card, quantity: card.quantity + 1} : card
+    )
   }
 }
 
