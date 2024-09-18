@@ -1,10 +1,32 @@
-import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { ApplicationConfig, isDevMode } from "@angular/core";
+import { provideRouter } from "@angular/router";
 
-import { routes } from './app.routes';
-import { provideEffects } from '@ngrx/effects';
-import { provideStore } from '@ngrx/store';
+import { routes } from "./app.routes";
+import { Action, createReducer, provideStore } from "@ngrx/store";
+import { cardReducer } from './Store/card/card.reducer';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideEffects(), provideStore()]
+  providers: [
+    provideRouter(routes),
+    provideStore({
+      card: cardReducer,
+    }),
+  ],
 };
+
+export interface CounterState {
+  count: number;
+}
+
+export const initialCounterState: CounterState = {
+  count: 0,
+};
+
+const _counterReducer = createReducer(initialCounterState);
+
+export function counterReducer(
+  state: CounterState | undefined,
+  action: Action,
+) {
+  return _counterReducer(state, action);
+}

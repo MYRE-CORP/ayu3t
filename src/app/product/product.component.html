@@ -1,25 +1,25 @@
-<div (click)="consoleLog()" class="product-container">
-    @for (product of _products(); track product.id) {
-        <div class="product-card">
-            <img [src]="product.image"
-                 [attr.alt]="product.name"
-                 class="product-image">
-            <h3> {{ product.name }} </h3>
-            <p> {{ product.price }}€ </p>
-            <div class="add-to-card-container">
-                <button class="add-to-card-button"
-                        (click)="_onProductClick(product)">Ajouter au panier
-                </button>
-                @for (card of _cardList(); track card.id) {
-                    <div>
-                        @if (product.id === card.id) {
-                            <button (click)="_addOneToCard(card)">+</button>
-                            <button (click)="_substractOneFromCard(card)">-</button>
-                        }
-                    </div>
-                }
-            </div>
-        </div>
-    }
+<div class="product-container">
+  @for (product of _products(); track product.id) {
+    <div class="product-card">
+      <img [src]="product.image"
+           [attr.alt]="product.name"
+           class="product-image">
+      <h3> {{ product.name }} </h3>
+      <p> {{ product.price }}€ </p>
+      <div class="add-to-card-container">
+        <button class="add-to-card-button"
+                (click)="_onProductClick(product)">Ajouter au panier
+        </button>
+        @for (card of _cardList(); track card.id) {
+          <div>
+            @if (product.id === card.id) {
+              <button (click)="_addOneToCard(card)">+</button>
+              <button (click)="_substractOneFromCard(card)">-</button>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
 </div>
 <app-card></app-card>

@@ -12,7 +12,7 @@ export const initialState: CardState = {
 
 export const cardReducer = createReducer(
   initialState,
-  on(CardActions.addProductCard, (state, {product}) => {
+  /*on(CardActions.addProductCard, (state, {product}) => {
     const cardExists = state.cards.some(card => card.id === product.id);
     if (cardExists) {
       return state;
@@ -36,7 +36,7 @@ export const cardReducer = createReducer(
     //TODO: recuperer quantité du produit
     //si la quantité est égale a 1 -> suppression du produyct
     //sinon je soustrais
-  }
+  }*/
 
 );
 
