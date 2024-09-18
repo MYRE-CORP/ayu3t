@@ -1,9 +1,12 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, Signal} from '@angular/core';
 import {ProductService} from '../Services/product.service';
 import {Card, Product} from '../interfaces';
 import {AsyncPipe} from '@angular/common';
-import {CardService} from '../Services/card.service';
 import {CardListComponent} from "../card/cardList.component";
+import {toSignal} from "@angular/core/rxjs-interop";
+import {selectAllCards} from "../Store/card/card.selectors";
+import {Store} from "@ngrx/store";
+import {addProductCard, incrementProductCard, substractProductCard} from "../Store/card/card.action";
 
 @Component({
   selector: 'app-product',
@@ -19,21 +22,23 @@ import {CardListComponent} from "../card/cardList.component";
 
 export class ProductComponent {
 
+  private readonly _store = inject(Store);
+
   private readonly _productService = inject(ProductService)
-  private readonly _cardService = inject(CardService)
+  // private readonly _cardService = inject(CardService)
 
   protected readonly _products = this._productService.products;
-  protected readonly _cardList = this._cardService.cardList;
+  protected _cardList: Signal<Card[]> = toSignal(this._store.select(selectAllCards));
 
   protected _onProductClick(product: Product): void {
-    this._cardService.addProductCard(product);
+    this._store.dispatch(addProductCard({product: product}));
   }
 
   protected _addOneToCard(cardElement: Card): void {
-    this._cardService.incrementProductCard(cardElement);
+    this._store.dispatch(incrementProductCard({productId: cardElement.id}));
   }
 
   protected _substractOneFromCard(cardElement: Card): void {
-    this._cardService.substractProductCard(cardElement);
+    this._store.dispatch(substractProductCard({productId: cardElement.id}));
   }
 }

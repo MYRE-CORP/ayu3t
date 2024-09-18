@@ -1,4 +1,4 @@
-<div class="product-container">
+<div (click)="consoleLog()" class="product-container">
     @for (product of _products(); track product.id) {
         <div class="product-card">
             <img [src]="product.image"
