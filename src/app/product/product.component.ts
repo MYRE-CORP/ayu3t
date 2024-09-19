@@ -1,8 +1,9 @@
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {ProductService} from '../Services/product.service';
 import {Card, Product} from '../interfaces';
-import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 import {CardService} from '../Services/card.service';
+import {CardListComponent} from "../card/cardList.component";
 
 @Component({
   selector: 'app-product',
@@ -12,8 +13,7 @@ import {CardService} from '../Services/card.service';
   standalone: true,
   imports: [
     AsyncPipe,
-    NgForOf,
-    NgIf,
+    CardListComponent
   ],
 })
 
@@ -22,8 +22,8 @@ export class ProductComponent {
   private readonly _productService = inject(ProductService)
   private readonly _cardService = inject(CardService)
 
-  protected _products = this._productService.products;
-  protected _cardList = this._cardService.cardList;
+  protected readonly _products = this._productService.products;
+  protected readonly _cardList = this._cardService.cardList;
 
   protected _onProductClick(product: Product): void {
     this._cardService.addProductCard(product);
