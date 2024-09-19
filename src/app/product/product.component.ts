@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ProductService } from '../Services/product.service';
-import { Card, Product } from '../interfaces';
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
-import { CardService } from '../Services/card.service';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {ProductService} from '../Services/product.service';
+import {Card, Product} from '../interfaces';
+import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
+import {CardService} from '../Services/card.service';
 
 @Component({
   selector: 'app-product',
@@ -17,38 +16,24 @@ import { CardService } from '../Services/card.service';
     NgIf,
   ],
 })
-export class ProductComponent implements OnInit {
-  protected _products$: Observable<Product[]>;
-  protected _cardList$: Observable<Card[]>;
 
-  constructor(
-    private productService: ProductService,
-    private cardService: CardService,
-  ) {
-  }
+export class ProductComponent {
 
-  ngOnInit() {
-    this._products$ = this.productService.products$;
-    this._cardList$ = this.cardService.cardList$;
-  }
+  private readonly _productService = inject(ProductService)
+  private readonly _cardService = inject(CardService)
+
+  protected _products = this._productService.products;
+  protected _cardList = this._cardService.cardList;
 
   protected _onProductClick(product: Product): void {
-    this.cardService.addProductCard(product);
+    this._cardService.addProductCard(product);
   }
 
   protected _addOneToCard(cardElement: Card): void {
-    this.cardService.incrementProductCard(cardElement);
+    this._cardService.incrementProductCard(cardElement);
   }
 
   protected _substractOneFromCard(cardElement: Card): void {
-    this.cardService.substractProductCard(cardElement);
-  }
-
-  protected _productTrackBy(_: number, product: { id: number }): number {
-    return product.id;
-  }
-
-  protected _cardTrackBy(_: number, card: Card): number {
-    return card.id;
+    this._cardService.substractProductCard(cardElement);
   }
 }

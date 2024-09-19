@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Card, Product } from '../interfaces';
+import {Injectable, Signal} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {Card, Product} from '../interfaces';
+import {toSignal} from "@angular/core/rxjs-interop";
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,7 @@ export class CardService {
 
   public substractProductCard(card: Card): void {
     const cardList = this._cardListSubject$.value.map(element =>
-      element.id === card.id ? { ...element, quantity: element.quantity - 1 } : element,
+      element.id === card.id ? {...element, quantity: element.quantity - 1} : element,
     );
     this._cardListSubject$.next(cardList);
     const cardElement = cardList.find(element => element.id === card.id);
@@ -37,7 +38,7 @@ export class CardService {
     this._cardListSubject$.next(
       cardList.map(element => {
         if (element.id === product.id) {
-          return { ...element, quantity: element.quantity + 1 };
+          return {...element, quantity: element.quantity + 1};
         }
         return element;
       }),
@@ -49,7 +50,7 @@ export class CardService {
     this._cardListSubject$.next(currentCard.filter(product => product.id !== id));
   }
 
-  public get cardList$(): Observable<Card[]> {
-    return this._cardListSubject$.asObservable();
+  public get cardList(): Signal<Card[]> {
+    return toSignal(this._cardListSubject$.asObservable())
   }
 }

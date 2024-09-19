@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ProductComponent } from './product/product.component';
-import { CardListComponent } from './card/cardList.component';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ProductComponent} from './product/product.component';
+import {CardListComponent} from './card/cardList.component';
+import {InputOutputComponent} from "./Exemple/input-output/input-output.component";
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,13 @@ import { CardListComponent } from './card/cardList.component';
   styleUrl: './app.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [ProductComponent, CardListComponent],
+  imports: [ProductComponent, CardListComponent, InputOutputComponent],
 })
 
 export class AppComponent {
+  protected words = ['coucou', 'bonjour', 'salut'];
+
+  protected _alertText(text: string) {
+    alert(text);
+  }
 }
