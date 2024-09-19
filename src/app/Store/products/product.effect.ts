@@ -6,13 +6,13 @@ import {products} from "../../constants";
 
 @Injectable()
 export class ProductsEffects {
-  loadProducts$ = createEffect(() =>
-    this.actions$.pipe(
+  public loadProducts$ = createEffect(() =>
+    this._actions$.pipe(
       ofType(loadProducts),
       map(() => loadProductsSuccess(products))
     )
   );
 
-  constructor(private actions$: Actions) {
+  constructor(private readonly _actions$: Actions) {
   }
 }
