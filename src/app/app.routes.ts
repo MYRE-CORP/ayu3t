@@ -1,28 +1,30 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {productResolver} from "./Resolver/product.resolver";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { productResolver } from './Resolver/product.resolver';
 
 export const routes: Routes = [
   {
     path: 'products',
-    resolve: productResolver,
+    resolve: {
+      test: productResolver,
+    },
     loadComponent: () =>
       import('./product/product.component').then(
-        (m) => m.ProductComponent
+        (m) => m.ProductComponent,
       ),
   },
   {
     path: 'hello-world',
     loadComponent: () =>
       import('./HelloWord/hello-word/hello-word.component').then(
-        (m) => m.HelloWordComponent
+        (m) => m.HelloWordComponent,
       ),
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 
 export class AppRoutingModule {
