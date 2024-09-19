@@ -16,7 +16,7 @@ export const cardReducer = createReducer(
   on(CardActions.addProductCard, (state, {product}) => {
     return {
       ...state,
-      cards: [...state.cards, {id: product.id, quantity: 0}]
+      cards: [...state.cards, {id: product.id, quantity: 1}]
     };
   }),
 

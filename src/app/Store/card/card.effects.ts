@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {select, Store} from '@ngrx/store';
 import {of} from 'rxjs';
-import {switchMap, withLatestFrom} from 'rxjs/operators';
+import {map, switchMap, withLatestFrom} from 'rxjs/operators';
 import * as CardActions from './card.action';
 import {selectAllCards} from './card.selectors';
 
@@ -16,16 +16,15 @@ export class CardEffects {
     this.actions$.pipe(
       ofType(CardActions.addOrIncrementProductCard),
       withLatestFrom(this.store.pipe(select(selectAllCards))),
-      switchMap(([{product}]) => {
+      map(([{product}]) => {
         const cards = this.store.selectSignal(selectAllCards);
-        const existingCard = cards().find(element => element.id === product.id);
+        const cardsArray = cards();
+        const existingCard = cardsArray.find(element => element.id === product.id);
         if (!existingCard) {
-          return [
-            CardActions.addProductCard({product: product}),
-            CardActions.incrementProductCard({card: existingCard})
-          ]
+          return (CardActions.addProductCard({product}));
+        } else {
+          return (CardActions.incrementProductCard({card: existingCard}));
         }
-        return of(CardActions.incrementProductCard({card: existingCard}));
       })
     )
   );

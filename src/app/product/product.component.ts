@@ -1,12 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
-import { Card, Product } from '../interfaces';
-import { AsyncPipe } from '@angular/common';
-import { CardListComponent } from '../card/cardList.component';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { selectAllCards } from '../Store/card/card.selectors';
-import { Store } from '@ngrx/store';
-import { addOrIncrementProductCard, substractProductCard } from '../Store/card/card.action';
-import { selectAllProducts } from '../Store/products/product.selectors';
+import {ChangeDetectionStrategy, Component, inject, Signal} from '@angular/core';
+import {Card, Product} from '../interfaces';
+import {AsyncPipe} from '@angular/common';
+import {CardListComponent} from '../card/cardList.component';
+import {toSignal} from '@angular/core/rxjs-interop';
+import {selectAllCards} from '../Store/card/card.selectors';
+import {Store} from '@ngrx/store';
+import {addOrIncrementProductCard, deleteOrSubtractProductCard} from '../Store/card/card.action';
+import {selectAllProducts} from '../Store/products/product.selectors';
 
 @Component({
   selector: 'app-product',
@@ -28,10 +28,10 @@ export class ProductComponent {
   protected _cardList: Signal<Card[]> = toSignal(this._store.select(selectAllCards));
 
   protected _onProductClick(product: Product): void {
-    this._store.dispatch(addOrIncrementProductCard({ product: product }));
+    this._store.dispatch(addOrIncrementProductCard({product: product}));
   }
 
   protected _substractOneFromCard(cardElement: Card): void {
-    this._store.dispatch(substractProductCard({ card: cardElement }));
+    this._store.dispatch(deleteOrSubtractProductCard({card: cardElement}));
   }
 }
