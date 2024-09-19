@@ -10,7 +10,7 @@
                 <p class="element"> {{ _products()[card.id].price }}€ </p>
                 <p class="element">quantité: {{ card.quantity }}</p>
                 <div class="element">
-                    <button (click)="_addOneToCard(card)">+</button>
+                    <button (click)="_addOneToCard(_products()[card.id])">+</button>
                     <button (click)="_substractOneFromCard(card)">-</button>
                 </div>
                 <svg (click)="_deleteProductFromCardList(card)"

@@ -12,56 +12,37 @@ export const initialState: CardState = {
 
 export const cardReducer = createReducer(
   initialState,
-  /*on(CardActions.addProductCard, (state, {product}) => {
-    const cardExists = state.cards.some(card => card.id === product.id);
-    if (cardExists) {
-      return state;
-    }
+
+  on(CardActions.addProductCard, (state, {product}) => {
     return {
       ...state,
       cards: [...state.cards, {id: product.id, quantity: 0}]
     };
-    this.incrementProductCard({productId: product.id});
   }),
-  on(CardActions.deleteProductCard, (state, {productId}) =>
-    deleteProductCard(state, productId)
+
+  on(CardActions.deleteProductCard, (state, {card}) => {
+      return {
+        ...state,
+        cards: state.cards.filter(element => element.id !== card.id)
+      }
+    }
   ),
-  on(CardActions.incrementProductCard, (state, {productId}) => ({
+
+  on(CardActions.incrementProductCard, (state, {card}) => ({
     ...state,
-    cards: state.cards.map(card =>
-      card.id === productId ? {...card, quantity: card.quantity + 1} : card
+    cards: state.cards.map(element =>
+      element.id === card.id ? {...element, quantity: element.quantity + 1} : element
     )
   })),
-  on(CardActions.substractProductCard, (state, {productId}) => {
-    //TODO: recuperer quantité du produit
-    //si la quantité est égale a 1 -> suppression du produyct
-    //sinon je soustrais
+
+  on(CardActions.substractProductCard, (state, {card}) => {
     const cardList = state.cards.map(element =>
-      element.id === productId ? {...element, quantity: element.quantity - 1} : element,
+      element.id === card.id ? {...element, quantity: element.quantity - 1} : element,
     );
-    this._cardListSubject$.next(cardList);
-    const cardElement = cardList.find(element => element.id === card.id);
-    if (cardElement && cardElement.quantity <= 0) {
-      this.deleteFromCard(cardElement.id);
-    }
-  }
-
-);
-
-function deleteProductCard(state: CardState, productId: number): CardState {
-  return {
-    ...state,
-    cards: state.cards.filter(card => card.id !== productId)
-  }
-}
-
-function incrementProductCard(state: CardState, product: any): CardState {
-  if()
-  return {
-    ...state,
-    cards: state.cards.map(card =>
-      card.id === product.id ? {...card, quantity: card.quantity + 1} : card
-    )
-  }
-}
+    return {
+      ...state,
+      cards: cardList
+    };
+  })
+)
 

@@ -1,5 +1,5 @@
 import {createAction, props} from '@ngrx/store';
-import {Product} from "../../interfaces";
+import {Card, Product} from "../../interfaces";
 
 export const addProductCard = createAction(
   '[Card] Add Product To Card',
@@ -8,15 +8,25 @@ export const addProductCard = createAction(
 
 export const incrementProductCard = createAction(
   '[Card] Add One Product Quantity',
-  props<{ productId: number }>()
+  props<{ card: Card }>()
 );
 
 export const substractProductCard = createAction(
   '[Card] Subtract One Product Quantity',
-  props<{ productId: number }>()
+  props<{ card: Card }>()
 );
 
 export const deleteProductCard = createAction(
   '[Card] Delete Product From Card',
-  props<{ productId: number }>()
+  props<{ card: Card }>()
+);
+
+export const addOrIncrementProductCard = createAction(
+  '[Card] Add Or Increment Product Card',
+  props<{ product: Product }>()
+);
+
+export const deleteOrSubtractProductCard = createAction(
+  '[Card] Delete Or Subtract Product Card',
+  props<{ card: Card }>()
 );
