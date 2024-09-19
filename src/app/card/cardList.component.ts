@@ -6,6 +6,8 @@ import {selectAllCards} from '../Store/card/card.selectors';
 import {addOrIncrementProductCard, deleteOrSubtractProductCard, deleteProductCard} from "../Store/card/card.action";
 import {toSignal} from "@angular/core/rxjs-interop";
 import {selectAllProducts} from "../Store/products/product.selectors";
+import {HighlightDirective} from "../directives/highlight.directive";
+import {DogDirective} from "../directives/dogs.directive";
 
 @Component({
   selector: 'app-card',
@@ -13,7 +15,7 @@ import {selectAllProducts} from "../Store/products/product.selectors";
   styleUrl: './cardList.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HighlightDirective, DogDirective],
 })
 export class CardListComponent {
 

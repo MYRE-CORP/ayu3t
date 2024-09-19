@@ -1,12 +1,12 @@
-<div class="card">
-    <h2>Panier</h2>
+<div dog class="card">
+    <h2 highlight style="display: inline-block">Panier</h2>
     @if (_cardList(); as cardList) {
         @for (card of cardList; track card.id) {
             <div class="card-product">
                 <img class="card-product-image element"
                      [src]="_products()[card.id].image"
                      alt="{{ _products()[card.id].name }}">
-                <h3 class="element"> {{ _products()[card.id].name }} </h3>
+                <h3 highlight color="lightgreen" class="element"> {{ _products()[card.id].name }} </h3>
                 <p class="element"> {{ _products()[card.id].price }}€ </p>
                 <p class="element">quantité: {{ card.quantity }}</p>
                 <div class="element">
