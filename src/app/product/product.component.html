@@ -22,4 +22,9 @@
         </div>
     }
 </div>
-<app-card></app-card>
+<app-card (_validateCard)="_openFormFunction()"></app-card>
+@if (_isValidate) {
+    <div class="overlay">
+        <app-form (_closeForm)="_closeFormFunction()"></app-form>
+    </div>
+}

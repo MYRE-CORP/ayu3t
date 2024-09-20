@@ -1,0 +1,18 @@
+@if (canAccess) {
+    <h1>Merci {{ _firstName }} {{ _lastName }} pour votre commande !</h1>
+    <h3>Récapitulatif de votre commande:</h3>
+    <div dog class="card">
+        @if (_card; as cardList) {
+            @for (card of cardList; track card.id) {
+                <div class="card-product">
+                    <img class="card-product-image element"
+                         [src]="_products()[card.id].image"
+                         alt="{{ _products()[card.id].name }}">
+                    <p class="element">{{ _products()[card.id].name }}</p>
+                    <p class="element">quantité: {{ card.quantity }}</p>
+                </div>
+            }
+        }
+    </div>
+
+}

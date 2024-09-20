@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, Signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, output, Signal} from '@angular/core';
 import {Card, Product} from '../interfaces';
 import {Store} from "@ngrx/store";
 import {CommonModule} from '@angular/common';
@@ -20,6 +20,7 @@ import {DogDirective} from "../directives/dogs.directive";
 export class CardListComponent {
 
   private readonly _store = inject(Store);
+  protected _validateCard = output();
 
   protected _cardList: Signal<Card[]> = this._store.selectSignal(selectAllCards);
   protected _products: Signal<Product[]> = toSignal(this._store.select(selectAllProducts));
@@ -34,5 +35,13 @@ export class CardListComponent {
 
   protected _substractOneFromCard(cardElement: Card): void {
     this._store.dispatch(deleteOrSubtractProductCard({card: cardElement}));
+  }
+
+  protected _validateCardFunction(): void {
+    this._validateCard.emit();
+  }
+
+  protected _isDisabledFunction(): boolean {
+    return this._cardList().length === 0;
   }
 }
