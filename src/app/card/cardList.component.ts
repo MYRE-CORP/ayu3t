@@ -1,8 +1,11 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
-import {Card} from '../interfaces';
+import {ChangeDetectionStrategy, Component, inject, Signal} from '@angular/core';
+import {Card, Product} from '../interfaces';
+import {Store} from "@ngrx/store";
 import {CommonModule} from '@angular/common';
-import {ProductService} from '../Services/product.service';
-import {CardService} from '../Services/card.service';
+import {selectAllCards} from '../Store/card/card.selectors';
+import {addOrIncrementProductCard, deleteOrSubtractProductCard, deleteProductCard} from "../Store/card/card.action";
+import {toSignal} from "@angular/core/rxjs-interop";
+import {selectAllProducts} from "../Store/products/product.selectors";
 
 @Component({
   selector: 'app-card',
@@ -14,21 +17,20 @@ import {CardService} from '../Services/card.service';
 })
 export class CardListComponent {
 
-  private readonly _productService = inject(ProductService)
-  private readonly _cardService = inject(CardService)
+  private readonly _store = inject(Store);
 
-  protected _products = this._productService.products;
-  protected _cardList = this._cardService.cardList;
+  protected _cardList: Signal<Card[]> = this._store.selectSignal(selectAllCards);
+  protected _products: Signal<Product[]> = toSignal(this._store.select(selectAllProducts));
 
   protected _deleteProductFromCardList(cardElement: Card): void {
-    this._cardService.deleteFromCard(cardElement.id);
+    this._store.dispatch(deleteProductCard({card: cardElement}));
   }
 
-  protected _addOneToCard(cardElement: Card): void {
-    this._cardService.incrementProductCard(cardElement);
+  protected _addOneToCard(cardElement: Product): void {
+    this._store.dispatch(addOrIncrementProductCard({product: cardElement}));
   }
 
   protected _substractOneFromCard(cardElement: Card): void {
-    this._cardService.substractProductCard(cardElement);
+    this._store.dispatch(deleteOrSubtractProductCard({card: cardElement}));
   }
 }

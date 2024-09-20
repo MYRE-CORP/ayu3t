@@ -13,7 +13,7 @@
                 @for (card of _cardList(); track card.id) {
                     <div>
                         @if (product.id === card.id) {
-                            <button (click)="_addOneToCard(card)">+</button>
+                            <button (click)="_onProductClick(product)">+</button>
                             <button (click)="_substractOneFromCard(card)">-</button>
                         }
                     </div>

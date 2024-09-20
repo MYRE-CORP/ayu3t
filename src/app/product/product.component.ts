@@ -1,9 +1,12 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
-import {ProductService} from '../Services/product.service';
+import {ChangeDetectionStrategy, Component, inject, Signal} from '@angular/core';
 import {Card, Product} from '../interfaces';
 import {AsyncPipe} from '@angular/common';
-import {CardService} from '../Services/card.service';
-import {CardListComponent} from "../card/cardList.component";
+import {CardListComponent} from '../card/cardList.component';
+import {toSignal} from '@angular/core/rxjs-interop';
+import {selectAllCards} from '../Store/card/card.selectors';
+import {Store} from '@ngrx/store';
+import {addOrIncrementProductCard, deleteOrSubtractProductCard} from '../Store/card/card.action';
+import {selectAllProducts} from '../Store/products/product.selectors';
 
 @Component({
   selector: 'app-product',
@@ -13,27 +16,22 @@ import {CardListComponent} from "../card/cardList.component";
   standalone: true,
   imports: [
     AsyncPipe,
-    CardListComponent
+    CardListComponent,
   ],
 })
 
 export class ProductComponent {
 
-  private readonly _productService = inject(ProductService)
-  private readonly _cardService = inject(CardService)
+  private readonly _store = inject(Store);
 
-  protected readonly _products = this._productService.products;
-  protected readonly _cardList = this._cardService.cardList;
+  protected _products: Signal<Product[]> = toSignal(this._store.select(selectAllProducts));
+  protected _cardList: Signal<Card[]> = toSignal(this._store.select(selectAllCards));
 
   protected _onProductClick(product: Product): void {
-    this._cardService.addProductCard(product);
-  }
-
-  protected _addOneToCard(cardElement: Card): void {
-    this._cardService.incrementProductCard(cardElement);
+    this._store.dispatch(addOrIncrementProductCard({product: product}));
   }
 
   protected _substractOneFromCard(cardElement: Card): void {
-    this._cardService.substractProductCard(cardElement);
+    this._store.dispatch(deleteOrSubtractProductCard({card: cardElement}));
   }
 }
