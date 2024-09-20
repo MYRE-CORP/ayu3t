@@ -7,6 +7,8 @@ import {selectAllCards} from '../Store/card/card.selectors';
 import {Store} from '@ngrx/store';
 import {addOrIncrementProductCard, deleteOrSubtractProductCard} from '../Store/card/card.action';
 import {selectAllProducts} from '../Store/products/product.selectors';
+import {HighlightDirective} from "../directives/highlight.directive";
+import {DogDirective} from "../directives/dogs.directive";
 
 @Component({
   selector: 'app-product',
@@ -17,6 +19,8 @@ import {selectAllProducts} from '../Store/products/product.selectors';
   imports: [
     AsyncPipe,
     CardListComponent,
+    HighlightDirective,
+    DogDirective,
   ],
 })
 
