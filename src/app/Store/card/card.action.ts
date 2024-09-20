@@ -30,3 +30,7 @@ export const deleteOrSubtractProductCard = createAction(
   '[Card] Delete Or Subtract Product Card',
   props<{ card: Card }>()
 );
+
+export const removeCard = createAction(
+  '[Card] Card Removed',
+);

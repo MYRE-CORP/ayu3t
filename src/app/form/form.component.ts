@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {selectAllCards} from "../Store/card/card.selectors";
 import {Store} from "@ngrx/store";
 import {Router} from "@angular/router";
+import {removeCard} from "../Store/card/card.action";
 
 @Component({
   selector: 'app-form',
@@ -36,6 +37,8 @@ export class FormComponent {
       const firstName = this.cardForm.get('firstName')?.value;
       const card = this._store.selectSignal(selectAllCards)();
       const fromForm = true;
+
+      this._store.dispatch(removeCard());
 
       this.router.navigate(['/recap-card'], {
         state: {lastName, firstName, card, fromForm}
