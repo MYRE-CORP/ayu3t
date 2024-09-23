@@ -22,7 +22,7 @@ export class FormComponent {
   private readonly _router = inject(Router);
 
   protected readonly _cardForm: FormGroup;
-  protected _closeForm = output();
+  public closeForm = output();
 
   constructor() {
     this._cardForm = this._fb.group({
@@ -32,7 +32,7 @@ export class FormComponent {
   }
 
   protected _closeFormFunction(): void {
-    this._closeForm.emit();
+    this.closeForm.emit();
   }
 
   protected _onSubmit(): void {
