@@ -43,6 +43,12 @@ export const cardReducer = createReducer(
       ...state,
       cards: cardList
     };
-  })
+  }),
+
+  on(CardActions.removeCard, () => {
+    return {
+      cards: []
+    };
+  }),
 )
 

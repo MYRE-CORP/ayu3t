@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { productResolver } from './Resolver/product.resolver';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {productResolver} from './Resolver/product.resolver';
 
 export const routes: Routes = [
   {
@@ -18,6 +18,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./HelloWord/hello-word/hello-word.component').then(
         (m) => m.HelloWordComponent,
+      ),
+  },
+  {
+    path: 'recap-card',
+    loadComponent: () =>
+      import('./recap/recap.component').then(
+        (m) => m.RecapComponent,
       ),
   },
 ];

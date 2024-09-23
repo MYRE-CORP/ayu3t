@@ -13,3 +13,7 @@
 .element {
     margin-right: 20px;
 }
+
+.valid-card {
+    cursor: pointer;
+}
