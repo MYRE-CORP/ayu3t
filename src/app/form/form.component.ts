@@ -16,12 +16,16 @@ import {removeCard} from "../Store/card/card.action";
   ]
 })
 export class FormComponent {
+
   private readonly _store = inject(Store);
-  cardForm: FormGroup;
+  private readonly _fb = inject(FormBuilder);
+  private readonly _router = inject(Router);
+
+  protected readonly _cardForm: FormGroup;
   protected _closeForm = output();
 
-  constructor(private fb: FormBuilder, private router: Router) {
-    this.cardForm = this.fb.group({
+  constructor() {
+    this._cardForm = this._fb.group({
       lastName: ['', [Validators.required]],
       firstName: ['', [Validators.required]]
     });
@@ -31,19 +35,20 @@ export class FormComponent {
     this._closeForm.emit();
   }
 
-  onSubmit() {
-    if (this.cardForm.valid) {
-      const lastName = this.cardForm.get('lastName')?.value;
-      const firstName = this.cardForm.get('firstName')?.value;
+  protected _onSubmit(): void {
+    if (!this._cardForm.valid) {
+      return;
+    } else {
+      const lastName = this._cardForm.get('lastName')?.value;
+      const firstName = this._cardForm.get('firstName')?.value;
       const card = this._store.selectSignal(selectAllCards)();
       const fromForm = true;
 
       this._store.dispatch(removeCard());
 
-      this.router.navigate(['/recap-card'], {
+      this._router.navigate(['/recap-card'], {
         state: {lastName, firstName, card, fromForm}
       });
-
     }
   }
 }

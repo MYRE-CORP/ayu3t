@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, inject, Signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {Router} from "@angular/router";
-import {Card, Product} from "../interfaces";
+import {Card} from "../interfaces";
 import {DogDirective} from "../directives/dogs.directive";
 import {HighlightDirective} from "../directives/highlight.directive";
 import {toSignal} from "@angular/core/rxjs-interop";
@@ -22,16 +22,17 @@ import {Store} from "@ngrx/store";
 export class RecapComponent {
 
   public canAccess: boolean = false;
-  protected _lastName: string;
-  protected _firstName: string;
-  protected _card: Card[];
+  protected readonly _lastName: string;
+  protected readonly _firstName: string;
+  protected readonly _card: Card[];
 
   private readonly _store = inject(Store);
+  private readonly _router = inject(Router);
 
-  protected _products: Signal<Product[]> = toSignal(this._store.select(selectAllProducts));
+  protected readonly _products = toSignal(this._store.select(selectAllProducts));
 
-  constructor(private router: Router) {
-    const navigation = this.router.getCurrentNavigation();
+  constructor() {
+    const navigation = this._router.getCurrentNavigation();
     const state = navigation?.extras?.state as { lastName: string, firstName: string, card: Card[], fromForm: boolean };
     if (state && state.lastName && state.firstName && state.card && state.fromForm) {
       this._lastName = state.lastName;
@@ -40,7 +41,7 @@ export class RecapComponent {
       this.canAccess = state.fromForm
     }
     if (!this.canAccess) {
-      this.router.navigate(['/products']);
+      this._router.navigate(['/products']);
     }
   }
 }

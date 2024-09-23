@@ -29,5 +29,6 @@
         }
     }
 </div>
-<button class="valid-card" [disabled]="_isDisabledFunction()" (click)="_validateCardFunction()">Valider le panier
+<button class="valid-card" [disabled]="_cardList() | isCardButtonDisable" (click)="_validateCardFunction()">Valider le
+    panier
 </button>

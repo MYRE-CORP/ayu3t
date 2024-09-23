@@ -1,10 +1,10 @@
 <div class="container">
-    <form class="modal-form" [formGroup]="cardForm" (ngSubmit)="onSubmit()">
+    <form class="modal-form" [formGroup]="_cardForm" (ngSubmit)="_onSubmit()">
         <button class="close-button" (click)="_closeFormFunction()">x</button>
         <div>
             <label for="lastName">Nom</label>
             <input id="lastName" formControlName="lastName">
-            @if (cardForm.get('lastName')?.invalid && cardForm.get('lastName')?.touched) {
+            @if (_cardForm.get('lastName')?.invalid && _cardForm.get('lastName')?.touched) {
                 <div class="error-message">
                     Vous devez saisir votre nom pour valider votre commande.
                 </div>
@@ -13,12 +13,12 @@
         <div>
             <label for="firstName">Prénom</label>
             <input id="firstName" formControlName="firstName">
-            @if (cardForm.get('firstName')?.invalid && cardForm.get('firstName')?.touched) {
+            @if (_cardForm.get('firstName')?.invalid && _cardForm.get('firstName')?.touched) {
                 <div class="error-message">
                     Vous devez saisir votre prénom pour valider votre commande.
                 </div>
             }
         </div>
-        <button type="submit" [disabled]="cardForm.invalid">Valider la commande</button>
+        <button type="submit" [disabled]="_cardForm.invalid">Valider la commande</button>
     </form>
 </div>

@@ -8,6 +8,7 @@ import {toSignal} from "@angular/core/rxjs-interop";
 import {selectAllProducts} from "../Store/products/product.selectors";
 import {HighlightDirective} from "../directives/highlight.directive";
 import {DogDirective} from "../directives/dogs.directive";
+import {IsCardButtonDisablePipe} from "./is-card-button-disable.pipe";
 
 @Component({
   selector: 'app-card',
@@ -15,12 +16,12 @@ import {DogDirective} from "../directives/dogs.directive";
   styleUrl: './cardList.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, HighlightDirective, DogDirective],
+  imports: [CommonModule, HighlightDirective, DogDirective, IsCardButtonDisablePipe],
 })
 export class CardListComponent {
 
   private readonly _store = inject(Store);
-  protected _validateCard = output();
+  protected readonly _validateCard = output();
 
   protected _cardList: Signal<Card[]> = this._store.selectSignal(selectAllCards);
   protected _products: Signal<Product[]> = toSignal(this._store.select(selectAllProducts));
